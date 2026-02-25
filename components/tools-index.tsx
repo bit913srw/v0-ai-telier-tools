@@ -69,7 +69,7 @@ const notes = [
     name: "MEASUREMENTS",
     href: "/tools/measurements",
     rotate: 2,
-    translateY: 8,
+    translateY: -6,
     tapeRotate: -2.5,
     tapeOffsetX: 4,
     wrinkleVariant: 1,
