@@ -29,6 +29,7 @@
 @theme inline {
   --font-sans: var(--font-playfair), 'Georgia', serif;
   --font-mono: var(--font-courier-prime), 'Courier New', monospace;
+  --font-handwriting: var(--font-caveat), 'Segoe Script', cursive;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

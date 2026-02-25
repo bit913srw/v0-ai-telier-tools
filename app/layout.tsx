@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Playfair_Display, Courier_Prime } from 'next/font/google'
+import { Playfair_Display, Courier_Prime, Caveat } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
@@ -13,6 +13,13 @@ const courierPrime = Courier_Prime({
   subsets: ['latin'],
   weight: ['400', '700'],
   variable: '--font-courier-prime',
+  display: 'swap',
+})
+
+const caveat = Caveat({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-caveat',
   display: 'swap',
 })
 
@@ -32,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${playfair.variable} ${courierPrime.variable} font-mono antialiased`}>
+      <body className={`${playfair.variable} ${courierPrime.variable} ${caveat.variable} font-mono antialiased`}>
         {children}
         <Analytics />
       </body>

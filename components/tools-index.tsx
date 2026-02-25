@@ -46,8 +46,8 @@ function FitText({ children }: { children: string }) {
     <div ref={containerRef} className="absolute inset-0 flex items-center justify-center px-4 py-4 z-10">
       <h2
         ref={textRef}
-        className="font-sans font-bold tracking-[0.1em] text-primary-foreground uppercase leading-[1.1] text-center text-balance"
-        style={{ fontSize: `${fontSize}px` }}
+        className="font-bold text-primary-foreground leading-[1.1] text-center text-balance"
+        style={{ fontSize: `${fontSize}px`, fontFamily: 'var(--font-handwriting)' }}
       >
         {children}
       </h2>
@@ -57,7 +57,7 @@ function FitText({ children }: { children: string }) {
 
 const notes = [
   {
-    name: "INSPIRATION",
+    name: "Inspiration",
     href: "/tools/inspiration",
     rotate: -3.5,
     translateY: 24,
@@ -66,7 +66,7 @@ const notes = [
     wrinkleVariant: 0,
   },
   {
-    name: "MEASUREMENTS",
+    name: "Measurements",
     href: "/tools/measurements",
     rotate: 2,
     translateY: -6,
@@ -75,7 +75,7 @@ const notes = [
     wrinkleVariant: 1,
   },
   {
-    name: "WORKING IDEAS",
+    name: "Working Ideas",
     href: "/tools/ideas",
     rotate: -1.2,
     translateY: 20,
