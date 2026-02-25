@@ -1,11 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import { useRef, useEffect, useState, useCallback } from "react"
 
-/* SVG filter for pencil-like text: feTurbulence displaces edges irregularly,
-   simulating the inconsistent pressure of a real pencil on paper. */
+/* SVG filter for pencil-like text with inconsistent thickness */
 function PencilFilter() {
   return (
     <svg className="absolute w-0 h-0" aria-hidden="true">
@@ -39,6 +37,53 @@ function PencilFilter() {
         </filter>
       </defs>
     </svg>
+  )
+}
+
+/* Ragged torn-edge masking tape SVG — positioned upper-left like the reference photo */
+function MaskingTape({ rotate, offsetX }: { rotate: number; offsetX: number }) {
+  return (
+    <div
+      className="absolute z-20 pointer-events-none"
+      style={{
+        top: -14,
+        left: offsetX,
+        width: 90,
+        height: 32,
+        transform: `rotate(${rotate}deg)`,
+      }}
+      aria-hidden="true"
+    >
+      <svg viewBox="0 0 90 32" fill="none" className="w-full h-full" preserveAspectRatio="none">
+        {/* Tape body with torn/ragged edges */}
+        <path
+          d="M2,6 C4,4 8,5.5 12,5 C16,4.5 20,3.5 26,4 C32,4.5 38,3 44,3.5 C50,4 56,3 62,3.5 C68,4 74,3.2 80,4 C84,4.5 87,5 88,6
+             L89,25 C87,26.5 83,25 79,26 C73,27 67,25.5 61,26.5 C55,27.5 49,26 43,27 C37,28 31,26.5 25,27.5 C19,28.5 13,27 7,28 C4,28.5 2,27.5 1,27 Z"
+          fill="rgba(230,225,215,0.82)"
+        />
+        {/* Slightly darker crease across the tape */}
+        <path
+          d="M6,14 Q25,12 45,15 Q65,18 85,13"
+          stroke="rgba(200,195,185,0.4)"
+          strokeWidth="0.8"
+          fill="none"
+        />
+        {/* Subtle fold/wrinkle highlight */}
+        <path
+          d="M10,10 Q30,8 50,11 Q70,14 82,9"
+          stroke="rgba(255,255,255,0.3)"
+          strokeWidth="0.6"
+          fill="none"
+        />
+        {/* Second subtle crease */}
+        <path
+          d="M4,20 Q22,18 44,21 Q66,24 86,19"
+          stroke="rgba(190,185,175,0.25)"
+          strokeWidth="0.5"
+          fill="none"
+        />
+      </svg>
+    </div>
   )
 }
 
@@ -105,18 +150,24 @@ const notes = [
     href: "/tools/inspiration",
     rotate: -3.5,
     translateY: 24,
+    tapeRotate: -12,
+    tapeOffsetX: 10,
   },
   {
     name: "Measurements",
     href: "/tools/measurements",
     rotate: 2,
     translateY: -6,
+    tapeRotate: -8,
+    tapeOffsetX: 16,
   },
   {
     name: "Working Ideas",
     href: "/tools/ideas",
     rotate: -1.2,
     translateY: 20,
+    tapeRotate: -15,
+    tapeOffsetX: 6,
   },
 ]
 
@@ -134,17 +185,69 @@ export function ToolsIndex() {
               transform: `rotate(${note.rotate}deg) translateY(${note.translateY}px)`,
             }}
           >
-            {/* Sticky note = the actual photograph, multiply blends away the black bg */}
-            <div className="relative aspect-[0.88] overflow-hidden transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-[1.02]" style={{ mixBlendMode: "multiply" }}>
-              <Image
-                src="/images/sticky-note.jpeg"
-                alt=""
-                fill
-                className="object-cover pointer-events-none select-none"
-                sizes="220px"
-                priority
+            {/* Masking tape across upper-left, matching reference photo */}
+            <MaskingTape rotate={note.tapeRotate} offsetX={note.tapeOffsetX} />
+
+            {/* Sticky note paper */}
+            <div
+              className="relative aspect-square overflow-hidden transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-[1.02]"
+              style={{
+                background: `linear-gradient(
+                  170deg,
+                  #e8e2a8 0%,
+                  #e4de9e 15%,
+                  #dfd992 40%,
+                  #e2dc98 60%,
+                  #e6e0a2 85%,
+                  #e3dd9a 100%
+                )`,
+                boxShadow: `
+                  2px 4px 12px rgba(0,0,0,0.15),
+                  1px 2px 4px rgba(0,0,0,0.1)
+                `,
+              }}
+            >
+              {/* Subtle paper texture lines */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.07]" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 200 200">
+                <line x1="0" y1="30" x2="200" y2="32" stroke="#000" strokeWidth="0.3" />
+                <line x1="0" y1="60" x2="200" y2="61" stroke="#000" strokeWidth="0.3" />
+                <line x1="0" y1="90" x2="200" y2="89" stroke="#000" strokeWidth="0.3" />
+                <line x1="0" y1="120" x2="200" y2="121" stroke="#000" strokeWidth="0.3" />
+                <line x1="0" y1="150" x2="200" y2="149" stroke="#000" strokeWidth="0.3" />
+                <line x1="0" y1="180" x2="200" y2="181" stroke="#000" strokeWidth="0.3" />
+              </svg>
+
+              {/* Inset paper edge shadows */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                aria-hidden="true"
+                style={{
+                  boxShadow: `
+                    inset 1px 1px 3px rgba(0,0,0,0.08),
+                    inset -1px -1px 3px rgba(0,0,0,0.06),
+                    inset 0 -3px 8px rgba(0,0,0,0.08)
+                  `,
+                }}
               />
-              {/* Text overlay, positioned in the center of the note area */}
+
+              {/* Bottom-right corner curl */}
+              <div
+                className="absolute bottom-0 right-0 w-[28px] h-[28px] pointer-events-none z-10"
+                aria-hidden="true"
+                style={{
+                  background: `linear-gradient(
+                    315deg,
+                    #F0EDE8 0%,
+                    #F0EDE8 44%,
+                    #d6d08c 44%,
+                    #c8c280 52%,
+                    #bfba78 100%
+                  )`,
+                  boxShadow: "-2px -2px 4px rgba(0,0,0,0.1)",
+                }}
+              />
+
+              {/* Pencil text */}
               <FitText>{note.name}</FitText>
             </div>
           </Link>
