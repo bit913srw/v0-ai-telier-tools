@@ -23,7 +23,7 @@ const items = [
 
 export function ToolsIndex() {
   return (
-    <nav className="px-6 md:px-12 py-8 md:py-12 w-full">
+    <nav className="px-6 md:px-12 py-8 md:py-12 w-full" data-v="2">
       <div className="flex flex-col items-center gap-12 md:flex-row md:justify-center md:items-start md:gap-16 lg:gap-24">
         {items.map((item) => (
           <Link
