@@ -1,69 +1,62 @@
-"use client"
-
 import Link from "next/link"
-import { useState } from "react"
 
-const sections = [
+const notes = [
   {
-    number: "01",
     name: "INSPIRATION",
     description: "Your editorial image library",
     href: "/tools/inspiration",
+    rotate: "-3deg",
+    translateY: "0px",
   },
   {
-    number: "02",
     name: "MEASUREMENTS",
     description: "Log body profiles for AI",
     href: "/tools/measurements",
+    rotate: "1.5deg",
+    translateY: "4px",
   },
   {
-    number: "03",
     name: "WORKING IDEAS",
     description: "Your design notebook",
     href: "/tools/ideas",
+    rotate: "-1deg",
+    translateY: "-2px",
   },
 ]
 
 export function ToolsIndex() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
-
   return (
-    <nav className="px-6 md:px-12 py-12 md:py-16">
-      <ul role="list">
-        {sections.map((section, index) => (
-          <li key={section.number}>
-            <Link
-              href={section.href}
-              className="group block"
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
-              <div className="flex items-baseline gap-6 md:gap-10 py-8 md:py-10 transition-opacity duration-300"
-                style={{
-                  opacity: hoveredIndex !== null && hoveredIndex !== index ? 0.35 : 1,
-                }}
-              >
-                <span className="font-sans text-4xl md:text-6xl lg:text-7xl font-bold text-primary tracking-wide leading-none">
-                  {section.number}
-                </span>
+    <nav className="px-6 md:px-12 py-12 md:py-20">
+      <div className="flex flex-col items-center gap-8 md:flex-row md:justify-center md:gap-10 lg:gap-14">
+        {notes.map((note) => (
+          <Link
+            key={note.name}
+            href={note.href}
+            className="group relative block w-full max-w-[240px] md:max-w-[220px] lg:max-w-[240px]"
+            style={{
+              transform: `rotate(${note.rotate}) translateY(${note.translateY})`,
+            }}
+          >
+            {/* Shadow layer */}
+            <div
+              className="absolute inset-0 bg-foreground/10 translate-y-2 translate-x-1"
+              style={{ filter: "blur(8px)" }}
+              aria-hidden="true"
+            />
 
-                <div className="flex flex-col gap-2">
-                  <span className="font-sans text-xl md:text-2xl lg:text-3xl font-bold tracking-[0.12em] text-primary uppercase">
-                    {section.name}
-                  </span>
-                  <span className="font-mono text-sm md:text-base text-muted-foreground italic">
-                    {section.description}
-                  </span>
-                </div>
-              </div>
-            </Link>
+            {/* Sticky note body */}
+            <div className="sticky-note relative bg-primary px-6 py-8 md:px-7 md:py-10 flex flex-col items-start gap-3 transition-transform duration-300 group-hover:scale-105 group-hover:-translate-y-1">
+              <h2 className="font-sans text-lg md:text-xl font-bold tracking-[0.14em] text-primary-foreground uppercase leading-tight">
+                {note.name}
+              </h2>
+              <p className="font-mono text-xs md:text-sm text-primary-foreground/75 italic leading-relaxed">
+                {note.description}
+              </p>
+            </div>
 
-            {index < sections.length - 1 && (
-              <div className="w-full h-px bg-primary/20" />
-            )}
-          </li>
+          </Link>
         ))}
-      </ul>
+      </div>
     </nav>
   )
 }

@@ -4,8 +4,8 @@ import { ToolsFooter } from "@/components/tools-footer"
 
 export default function ToolsPage() {
   return (
-    <main className="min-h-svh bg-background flex flex-col justify-between max-w-3xl mx-auto">
-      <div>
+    <main className="min-h-svh bg-background flex flex-col justify-between">
+      <div className="w-full max-w-4xl mx-auto">
         <ToolsHeader />
         <ToolsIndex />
       </div>
