@@ -5,28 +5,32 @@ const items = [
     name: "INSPIRATION",
     description: "Your editorial image library",
     href: "/tools/inspiration",
+    offsetY: 30,
   },
   {
     name: "MEASUREMENTS",
     description: "Log body profiles for AI",
     href: "/tools/measurements",
+    offsetY: -35,
   },
   {
     name: "WORKING IDEAS",
     description: "Your design notebook",
     href: "/tools/ideas",
+    offsetY: 20,
   },
 ]
 
 export function ToolsIndex() {
   return (
     <nav className="px-6 md:px-12 py-8 md:py-12 w-full">
-      <div className="flex flex-col items-center gap-8 md:flex-row md:justify-center md:gap-10 lg:gap-14">
+      <div className="flex flex-col items-center gap-12 md:flex-row md:justify-center md:items-start md:gap-16 lg:gap-24">
         {items.map((item) => (
           <Link
             key={item.name}
             href={item.href}
             className="group relative flex items-center justify-center w-[220px] h-[140px] md:w-[210px] md:h-[130px] lg:w-[240px] lg:h-[150px] transition-all duration-300 hover:-translate-y-1"
+            style={{ transform: `translateY(${item.offsetY}px)` }}
           >
             {/* Outer shadow for 3D depth */}
             <div
