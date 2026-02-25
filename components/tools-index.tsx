@@ -33,7 +33,7 @@ export function ToolsIndex() {
             style={{ transform: `translateY(${item.offsetY}px)` }}
           >
             {/* Hairline bordered container */}
-            <div className="relative flex flex-col items-center justify-center w-[200px] h-[120px] md:w-[190px] md:h-[110px] lg:w-[220px] lg:h-[130px] border-2 border-primary/30 transition-all duration-500 group-hover:border-primary">
+            <div className="relative flex flex-col items-center justify-center w-[200px] h-[120px] md:w-[190px] md:h-[110px] lg:w-[220px] lg:h-[130px] border-2 border-primary transition-all duration-500 group-hover:border-primary">
               {/* Thin accent line at top */}
               <div
                 className="absolute top-0 left-1/2 -translate-x-1/2 h-px bg-primary transition-all duration-500 group-hover:w-full"
