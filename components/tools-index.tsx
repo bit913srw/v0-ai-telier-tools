@@ -132,23 +132,30 @@ export function ToolsIndex() {
             className="group relative block w-[200px] md:w-[200px] lg:w-[220px]"
             style={{
               transform: `rotate(${note.rotate}deg) translateY(${note.translateY}px)`,
-              filter: "drop-shadow(3px 6px 8px rgba(0,0,0,0.18))",
             }}
           >
-            {/* Container for positioning */}
-            <div className="relative aspect-[0.88] transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-[1.02]">
-              {/* Sticky note image with blend mode to remove black background */}
-              <div className="absolute inset-0 overflow-hidden" style={{ mixBlendMode: "lighten" }}>
-                <Image
-                  src="/images/sticky-note.jpeg"
-                  alt=""
-                  fill
-                  className="object-cover pointer-events-none select-none"
-                  sizes="220px"
-                  priority
-                />
-              </div>
-              {/* Text overlay sits above the blended image */}
+            {/* Drop shadow */}
+            <div
+              className="absolute -inset-3 transition-all duration-300 group-hover:translate-y-1"
+              style={{
+                background: "radial-gradient(ellipse at 55% 60%, rgba(0,0,0,0.25) 0%, transparent 60%)",
+                filter: "blur(14px)",
+                transform: "translateY(10px) translateX(5px)",
+              }}
+              aria-hidden="true"
+            />
+
+            {/* Sticky note = the actual photograph */}
+            <div className="relative aspect-[0.88] overflow-hidden transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-[1.02]">
+              <Image
+                src="/images/sticky-note.jpeg"
+                alt=""
+                fill
+                className="object-cover pointer-events-none select-none"
+                sizes="220px"
+                priority
+              />
+              {/* Text overlay, positioned in the center of the note area */}
               <FitText>{note.name}</FitText>
             </div>
           </Link>
