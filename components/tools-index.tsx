@@ -134,19 +134,8 @@ export function ToolsIndex() {
               transform: `rotate(${note.rotate}deg) translateY(${note.translateY}px)`,
             }}
           >
-            {/* Drop shadow */}
-            <div
-              className="absolute -inset-3 transition-all duration-300 group-hover:translate-y-1"
-              style={{
-                background: "radial-gradient(ellipse at 55% 60%, rgba(0,0,0,0.25) 0%, transparent 60%)",
-                filter: "blur(14px)",
-                transform: "translateY(10px) translateX(5px)",
-              }}
-              aria-hidden="true"
-            />
-
-            {/* Sticky note = the actual photograph */}
-            <div className="relative aspect-[0.88] overflow-hidden transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-[1.02]">
+            {/* Sticky note = the actual photograph, multiply blends away the black bg */}
+            <div className="relative aspect-[0.88] overflow-hidden transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-[1.02]" style={{ mixBlendMode: "multiply" }}>
               <Image
                 src="/images/sticky-note.jpeg"
                 alt=""
