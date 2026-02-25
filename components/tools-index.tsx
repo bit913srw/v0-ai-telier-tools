@@ -11,7 +11,7 @@ const items = [
     name: "MEASUREMENTS",
     description: "Log body profiles for AI",
     href: "/tools/measurements",
-    offsetY: -35,
+    offsetY: -110,
   },
   {
     name: "WORKING IDEAS",
