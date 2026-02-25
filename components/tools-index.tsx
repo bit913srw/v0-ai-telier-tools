@@ -169,7 +169,7 @@ function CurlEffect() {
 
 export function ToolsIndex() {
   return (
-    <nav className="px-6 md:px-12 py-14 md:py-24" style={{ perspective: "900px" }}>
+    <nav className="px-6 md:px-12 py-8 md:py-12 w-full" style={{ perspective: "900px" }}>
       <div className="flex flex-col items-center gap-14 md:flex-row md:justify-center md:items-start md:gap-10 lg:gap-14">
         {notes.map((note, i) => (
           <Link
