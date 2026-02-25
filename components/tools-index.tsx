@@ -1,153 +1,88 @@
-"use client"
-
 import Link from "next/link"
-import Image from "next/image"
-import { useRef, useEffect, useState, useCallback } from "react"
 
-/* SVG filter for pencil-like text with inconsistent thickness */
-function PencilFilter() {
-  return (
-    <svg className="absolute w-0 h-0" aria-hidden="true">
-      <defs>
-        <filter id="pencil" x="-5%" y="-5%" width="110%" height="110%">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.04"
-            numOctaves="4"
-            seed="2"
-            result="noise"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="noise"
-            scale="1.8"
-            xChannelSelector="R"
-            yChannelSelector="G"
-            result="displaced"
-          />
-          <feMorphology
-            in="displaced"
-            operator="erode"
-            radius="0.2"
-            result="thinned"
-          />
-          <feGaussianBlur in="thinned" stdDeviation="0.3" result="softened" />
-          <feComponentTransfer in="softened" result="final">
-            <feFuncA type="linear" slope="1.6" intercept="-0.15" />
-          </feComponentTransfer>
-        </filter>
-      </defs>
-    </svg>
-  )
-}
-
-function FitText({ children }: { children: string }) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const textRef = useRef<HTMLHeadingElement>(null)
-  const [fontSize, setFontSize] = useState(48)
-
-  const fit = useCallback(() => {
-    const container = containerRef.current
-    const text = textRef.current
-    if (!container || !text) return
-
-    const maxW = container.clientWidth - 48
-    const maxH = container.clientHeight - 48
-
-    let lo = 12
-    let hi = 120
-    let best = lo
-
-    while (lo <= hi) {
-      const mid = Math.floor((lo + hi) / 2)
-      text.style.fontSize = `${mid}px`
-      const fits = text.scrollWidth <= maxW && text.scrollHeight <= maxH
-      if (fits) {
-        best = mid
-        lo = mid + 1
-      } else {
-        hi = mid - 1
-      }
-    }
-
-    setFontSize(best)
-  }, [])
-
-  useEffect(() => {
-    fit()
-    window.addEventListener("resize", fit)
-    return () => window.removeEventListener("resize", fit)
-  }, [fit])
-
-  return (
-    <div ref={containerRef} className="w-full h-full flex items-center justify-center px-4 py-2">
-      <h2
-        ref={textRef}
-        className="font-bold leading-[1.1] text-center text-balance"
-        style={{
-          fontSize: `${fontSize}px`,
-          fontFamily: "var(--font-handwriting)",
-          color: "#2a2a2a",
-          filter: "url(#pencil)",
-          WebkitTextStroke: "0.3px rgba(30,30,30,0.3)",
-        }}
-      >
-        {children}
-      </h2>
-    </div>
-  )
-}
-
-const notes = [
+const items = [
   {
-    name: "Inspiration",
+    name: "INSPIRATION",
+    description: "Your editorial image library",
     href: "/tools/inspiration",
-    rotate: -3.5,
-    translateY: 24,
   },
   {
-    name: "Measurements",
+    name: "MEASUREMENTS",
+    description: "Log body profiles for AI",
     href: "/tools/measurements",
-    rotate: 2,
-    translateY: -6,
   },
   {
-    name: "Working Ideas",
+    name: "WORKING IDEAS",
+    description: "Your design notebook",
     href: "/tools/ideas",
-    rotate: -1.2,
-    translateY: 20,
   },
 ]
 
 export function ToolsIndex() {
   return (
     <nav className="px-6 md:px-12 py-8 md:py-12 w-full">
-      <PencilFilter />
-      <div className="flex flex-col items-center gap-6 md:flex-row md:justify-center md:items-start md:gap-4 lg:gap-8">
-        {notes.map((note) => (
+      <div className="flex flex-col items-center gap-8 md:flex-row md:justify-center md:gap-10 lg:gap-14">
+        {items.map((item) => (
           <Link
-            key={note.name}
-            href={note.href}
-            className="group relative block w-[240px] md:w-[230px] lg:w-[260px] transition-transform duration-300 group-hover:-translate-y-1"
-            style={{
-              transform: `rotate(${note.rotate}deg) translateY(${note.translateY}px)`,
-            }}
+            key={item.name}
+            href={item.href}
+            className="group relative flex items-center justify-center w-[220px] h-[140px] md:w-[210px] md:h-[130px] lg:w-[240px] lg:h-[150px] transition-all duration-300 hover:-translate-y-1"
           >
-            {/* The actual sticky note + tape photograph (transparent PNG) */}
-            <div className="relative w-full">
-              <Image
-                src="/images/sticky-note.png"
-                alt=""
-                width={600}
-                height={500}
-                className="w-full h-auto pointer-events-none select-none"
-                priority
-              />
+            {/* Outer shadow for 3D depth */}
+            <div
+              className="absolute inset-0 rounded-[50%] transition-all duration-300 group-hover:translate-y-1"
+              aria-hidden="true"
+              style={{
+                background: "rgba(0,0,0,0.25)",
+                filter: "blur(12px)",
+                transform: "translateY(8px) scaleX(0.95)",
+              }}
+            />
 
-              {/* Text overlay positioned on the paper area (below the tape) */}
-              <div className="absolute inset-0 flex items-center justify-center" style={{ top: "18%", bottom: "4%", left: "8%", right: "4%" }}>
-                <FitText>{note.name}</FitText>
-              </div>
+            {/* Oval body with 3D gradient */}
+            <div
+              className="absolute inset-0 rounded-[50%] transition-all duration-300 group-hover:scale-[1.03]"
+              aria-hidden="true"
+              style={{
+                background: `
+                  radial-gradient(
+                    ellipse at 35% 30%,
+                    #b02828 0%,
+                    #8B1A1A 35%,
+                    #6e1313 70%,
+                    #4a0e0e 100%
+                  )
+                `,
+                boxShadow: `
+                  inset -4px -6px 12px rgba(0,0,0,0.3),
+                  inset 3px 4px 10px rgba(255,255,255,0.08),
+                  0 2px 6px rgba(0,0,0,0.2)
+                `,
+              }}
+            />
+
+            {/* Specular highlight */}
+            <div
+              className="absolute rounded-[50%] pointer-events-none"
+              aria-hidden="true"
+              style={{
+                top: "14%",
+                left: "18%",
+                width: "45%",
+                height: "30%",
+                background: "radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.15) 0%, transparent 70%)",
+                transform: "rotate(-12deg)",
+              }}
+            />
+
+            {/* Text */}
+            <div className="relative z-10 flex flex-col items-center gap-1.5 px-6">
+              <span className="font-mono text-xs md:text-sm tracking-[0.2em] text-primary-foreground uppercase font-bold text-center">
+                {item.name}
+              </span>
+              <span className="font-mono text-[10px] md:text-xs tracking-[0.08em] text-primary-foreground/60 italic text-center">
+                {item.description}
+              </span>
             </div>
           </Link>
         ))}
