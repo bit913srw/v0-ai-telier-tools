@@ -1,4 +1,59 @@
+"use client"
+
 import Link from "next/link"
+import { useRef, useEffect, useState, useCallback } from "react"
+
+function FitText({ children }: { children: string }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const textRef = useRef<HTMLHeadingElement>(null)
+  const [fontSize, setFontSize] = useState(48)
+
+  const fit = useCallback(() => {
+    const container = containerRef.current
+    const text = textRef.current
+    if (!container || !text) return
+
+    const maxW = container.clientWidth - 32 // px-4 on each side
+    const maxH = container.clientHeight - 32
+
+    let lo = 12
+    let hi = 120
+    let best = lo
+
+    // Binary search for the largest font size that fits
+    while (lo <= hi) {
+      const mid = Math.floor((lo + hi) / 2)
+      text.style.fontSize = `${mid}px`
+      const fits = text.scrollWidth <= maxW && text.scrollHeight <= maxH
+      if (fits) {
+        best = mid
+        lo = mid + 1
+      } else {
+        hi = mid - 1
+      }
+    }
+
+    setFontSize(best)
+  }, [])
+
+  useEffect(() => {
+    fit()
+    window.addEventListener("resize", fit)
+    return () => window.removeEventListener("resize", fit)
+  }, [fit])
+
+  return (
+    <div ref={containerRef} className="absolute inset-0 flex items-center justify-center px-4 py-4 z-10">
+      <h2
+        ref={textRef}
+        className="font-sans font-bold tracking-[0.1em] text-primary-foreground uppercase leading-[1.1] text-center text-balance"
+        style={{ fontSize: `${fontSize}px` }}
+      >
+        {children}
+      </h2>
+    </div>
+  )
+}
 
 const notes = [
   {
@@ -243,10 +298,8 @@ export function ToolsIndex() {
                 }}
               />
 
-              {/* Centered title */}
-              <h2 className="relative z-10 font-sans text-xl md:text-2xl font-bold tracking-[0.12em] text-primary-foreground uppercase leading-tight text-center px-4 text-balance">
-                {note.name}
-              </h2>
+              {/* Auto-fit title */}
+              <FitText>{note.name}</FitText>
             </div>
 
             {/* Corner curl */}
