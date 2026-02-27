@@ -42,15 +42,15 @@ export function ToolsIndex() {
               />
 
               {/* Title */}
-              <span className="font-mono text-[11px] md:text-xs tracking-[0.25em] text-foreground uppercase text-center">
+              <span className="font-mono text-sm md:text-base tracking-[0.2em] text-foreground uppercase text-center font-medium">
                 {item.name}
               </span>
 
               {/* Divider */}
-              <div className="w-4 h-px bg-primary/40 my-2.5" aria-hidden="true" />
+              <div className="w-5 h-px bg-primary/40 my-3" aria-hidden="true" />
 
               {/* Subtitle */}
-              <span className="font-mono text-[9px] md:text-[10px] tracking-[0.1em] text-muted-foreground italic text-center">
+              <span className="font-mono text-xs md:text-sm tracking-[0.08em] text-muted-foreground italic text-center">
                 {item.description}
               </span>
             </div>
