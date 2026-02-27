@@ -42,16 +42,8 @@ export function ToolsIndex() {
               />
 
               {/* Title */}
-              <span className="font-mono text-sm md:text-base tracking-[0.2em] text-foreground uppercase text-center font-medium">
+              <span className="font-mono text-base md:text-lg lg:text-xl tracking-[0.15em] text-foreground uppercase text-center font-medium">
                 {item.name}
-              </span>
-
-              {/* Divider */}
-              <div className="w-5 h-px bg-primary/40 my-3" aria-hidden="true" />
-
-              {/* Subtitle */}
-              <span className="font-mono text-xs md:text-sm tracking-[0.08em] text-muted-foreground italic text-center">
-                {item.description}
               </span>
             </div>
           </Link>
