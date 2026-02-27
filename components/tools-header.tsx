@@ -6,7 +6,7 @@ export function ToolsHeader() {
       <div className="flex items-center justify-between mb-6">
         <Link
           href="/"
-          className="font-mono text-base md:text-lg tracking-[0.15em] uppercase text-primary hover:opacity-70 transition-opacity"
+          className="font-mono text-sm tracking-[0.2em] uppercase text-primary hover:opacity-70 transition-opacity"
         >
           {"← STUDIO"}
         </Link>
