@@ -24,7 +24,7 @@ const items = [
 export function ToolsIndex() {
   return (
     <nav className="px-6 md:px-12 py-8 md:py-12 w-full">
-      <div className="flex flex-col items-center gap-12 md:flex-row md:justify-evenly md:items-start w-full max-w-4xl mx-auto">
+      <div className="flex flex-col items-center gap-12 md:flex-row md:justify-center md:items-start md:gap-20 lg:gap-28">
         {items.map((item) => (
           <Link
             key={item.name}
